@@ -28,6 +28,16 @@ namespace WebSalesMVC.Controllers
             return View();
         }
 
+        public IActionResult About()
+        {
+            ViewData["Title"] = "Curso Sales Web MVC";
+            ViewData["Criado"] = "Criado por Luciano";
+            ViewData["info"] = "Mais informações";
+
+
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
