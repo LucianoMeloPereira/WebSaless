@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using WebSalesMVC.Models;
+using WebSalesMVC.Models.ViewModels;
 
 namespace WebSalesMVC.Controllers
 {
