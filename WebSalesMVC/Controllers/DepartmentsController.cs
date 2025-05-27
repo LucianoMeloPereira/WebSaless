@@ -10,11 +10,11 @@ using WebSalesMVC.Models;
 
 namespace WebSalesMVC.Controllers
 {
-    public class DeparmentsController : Controller
+    public class DepartmentsController : Controller
     {
         private readonly WebSalesMVCContext _context;
 
-        public DeparmentsController(WebSalesMVCContext context)
+        public DepartmentsController(WebSalesMVCContext context)
         {
             _context = context;
         }
