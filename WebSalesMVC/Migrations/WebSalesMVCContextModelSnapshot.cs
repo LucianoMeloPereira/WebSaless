@@ -19,7 +19,7 @@ namespace WebSalesMVC.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("WebSalesMVC.Models.Deparment", b =>
+            modelBuilder.Entity("WebSalesMVC.Models.Department", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -31,7 +31,7 @@ namespace WebSalesMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Deparment");
+                    b.ToTable("Department");
                 });
 
             modelBuilder.Entity("WebSalesMVC.Models.SalesRecord", b =>
@@ -100,14 +100,14 @@ namespace WebSalesMVC.Migrations
 
             modelBuilder.Entity("WebSalesMVC.Models.Seller", b =>
                 {
-                    b.HasOne("WebSalesMVC.Models.Deparment", "Department")
+                    b.HasOne("WebSalesMVC.Models.Department", "Department")
                         .WithMany("Sellers")
                         .HasForeignKey("DepartmentId");
 
                     b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("WebSalesMVC.Models.Deparment", b =>
+            modelBuilder.Entity("WebSalesMVC.Models.Department", b =>
                 {
                     b.Navigation("Sellers");
                 });

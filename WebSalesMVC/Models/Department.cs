@@ -5,18 +5,18 @@ using System.Linq;
 
 namespace WebSalesMVC.Models
 {
-    public class Deparment
+    public class Department
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public ICollection<Seller> Sellers { get; set; } = new List<Seller>();
 
 
-        public Deparment()
+        public Department()
         {
 
         }
-        public Deparment(int id, string name)
+        public Department(int id, string name)
         {
             Id = id;
             Name = name;
