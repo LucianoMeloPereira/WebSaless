@@ -24,6 +24,7 @@ namespace WebSalesMVC.Data
                 return; // DB has been seeded
             }
 
+
             Department d1 = new Department { Name = "Computers" };
             Department d2 = new Department {Name = "Electronics" };
             Department d3 = new Department {Name = "Fashion" };
