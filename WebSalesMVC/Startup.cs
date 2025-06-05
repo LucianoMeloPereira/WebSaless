@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using WebSalesMVC.Data;
+using WebSalesMVC.Services;
 
 namespace WebSalesMVC
 {
@@ -30,6 +31,7 @@ namespace WebSalesMVC
             services.AddDbContext<WebSalesMVCContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("WebSalesMVCContext")));
             services.AddScoped<SeedingService>();
+            services.AddScoped<SellerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
