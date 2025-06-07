@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebSalesMVC.Models;
 using WebSalesMVC.Services;
 
 namespace WebSalesMVC.Controllers
@@ -19,6 +20,17 @@ namespace WebSalesMVC.Controllers
             return View(listFindAll);
         }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Seller obj)
+        {
+            _sellerService.Insert(obj);
+            return RedirectToAction(nameof(Index));
+        }
          
     }
 }
