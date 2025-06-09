@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using WebSalesMVC.Data;
 using WebSalesMVC.Models;
 
@@ -22,8 +23,13 @@ namespace WebSalesMVC.Services
 
         public void Insert(Seller obj)
         {
+            if(obj == null)
+            {
+                throw new Exception("Error");
+            }
             _context.Add(obj);
             _context.SaveChanges(); 
         }
     }
 }
+    
