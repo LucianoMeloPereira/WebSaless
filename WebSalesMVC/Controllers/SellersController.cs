@@ -35,11 +35,41 @@ namespace WebSalesMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(SellerFormViewModel obj)
         {
+
             Seller selerObj = new Seller();
             selerObj = obj.Seller;
             _sellerService.Insert(selerObj);
             return RedirectToAction(nameof(Index));
         }
          
+        public IActionResult Delete(int? id)
+        {
+            if(id.Value == null)
+            {
+                return NotFound();
+            }
+
+            var obj = _sellerService.FindById(id.Value);
+            if(obj == null)
+            {
+                return NotFound();
+            }
+
+            return View(obj);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Seller seller)
+        {
+            if (seller == null)
+            {
+                return NotFound();
+            }
+
+
+            _sellerService.Remove(seller.Id);
+            return RedirectToAction("Index");
+
+        }
     }
 }
