@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using WebSalesMVC.Data;
 using WebSalesMVC.Models;
@@ -33,7 +34,7 @@ namespace WebSalesMVC.Services
 
         public Seller FindById(int id)
         {
-             return  _context.Seller.FirstOrDefault(obj => obj.Id == id);
+            return _context.Seller.Include(dep => dep.Department).FirstOrDefault(obj => obj.Id == id);
 
         }
 

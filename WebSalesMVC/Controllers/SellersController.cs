@@ -71,5 +71,13 @@ namespace WebSalesMVC.Controllers
             return RedirectToAction("Index");
 
         }
+
+        public IActionResult Details(int? id)
+        {
+           var seller =  _sellerService.FindById(id.Value);
+
+            return View(seller);
+
+        }
     }
 }
