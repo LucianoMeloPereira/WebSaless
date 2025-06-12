@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using WebSalesMVC.Data;
 using WebSalesMVC.Models;
+using WebSalesMVC.Services.Exceptions;
 
 namespace WebSalesMVC.Services
 {
@@ -24,12 +25,12 @@ namespace WebSalesMVC.Services
 
         public void Insert(Seller obj)
         {
-            if(obj == null)
+            if (obj == null)
             {
                 throw new Exception("Error");
             }
             _context.Add(obj);
-            _context.SaveChanges(); 
+            _context.SaveChanges();
         }
 
         public Seller FindById(int id)
@@ -44,6 +45,26 @@ namespace WebSalesMVC.Services
             _context.Remove(obj);
             _context.SaveChanges();
         }
+
+        public void Update(Seller obj)
+        {
+            if (!_context.Seller.Any(x => x.Id == obj.Id))
+            {
+                throw new NotFoundException("Id not found");
+            }
+
+            try
+            {
+
+
+                _context.Update(obj);
+                _context.SaveChanges();
+            }
+
+            catch (DbUpdateConcurrencyException e)
+            {
+                throw new DbConcurrencyException(e.Message);
+            }
+        }
     }
 }
-    
