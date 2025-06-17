@@ -41,6 +41,11 @@ namespace WebSalesMVC.Controllers
         public ActionResult Create(SellerFormViewModel obj)
         {
 
+            if (!ModelState.IsValid)
+            {
+                return View(obj);
+            }
+
             Seller selerObj = new Seller();
             selerObj = obj.Seller;
             _sellerService.Insert(selerObj);
@@ -118,6 +123,14 @@ namespace WebSalesMVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Seller seller)
         {
+            var departments = _departmentService.FindAll();
+            var viewModel = new SellerFormViewModel { Departments = departments, Seller = seller };
+
+            if(!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
             if (id != seller.Id)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id miss mathed" });
