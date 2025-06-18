@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using WebSalesMVC.Models;
 using WebSalesMVC.Models.ViewModels;
 using WebSalesMVC.Services;
@@ -22,15 +23,15 @@ namespace WebSalesMVC.Controllers
         }
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var listFindAll = _sellerService.FindAll();
+            var listFindAll = await _sellerService.FindAllAsync();
             return View(listFindAll);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var departments = _departmentService.FindAll();
+            var departments = await _departmentService.FindAllAsync();
             var viewModel = new SellerFormViewModel { Departments = departments };
 
 
@@ -52,14 +53,14 @@ namespace WebSalesMVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id.Value == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
 
-            var obj = _sellerService.FindById(id.Value);
+            var obj = await _sellerService.FindByIdAsync(id.Value);
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
@@ -69,7 +70,7 @@ namespace WebSalesMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(Seller seller)
+        public async Task<IActionResult> Delete(Seller seller)
         {
             if (seller == null)
             {
@@ -77,20 +78,20 @@ namespace WebSalesMVC.Controllers
             }
 
 
-            _sellerService.Remove(seller.Id);
+            await _sellerService.RemoveAsync(seller.Id);
             return RedirectToAction("Index");
 
         }
 
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
-            var seller = _sellerService.FindById(id.Value);
+            var seller = await _sellerService.FindByIdAsync(id.Value);
 
-            if(seller == null)
+            if (seller == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
@@ -99,21 +100,21 @@ namespace WebSalesMVC.Controllers
 
         }
 
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
 
-            var obj = _sellerService.FindById(id.Value);
+            var obj = await _sellerService.FindByIdAsync(id.Value);
 
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
 
-            List<Department> departments = _departmentService.FindAll();
+            List<Department> departments = await _departmentService.FindAllAsync();
             SellerFormViewModel seller = new SellerFormViewModel { Seller = obj, Departments = departments };
 
             return View(seller);
@@ -121,12 +122,12 @@ namespace WebSalesMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Seller seller)
+        public async Task<IActionResult> Edit(int id, Seller seller)
         {
-            var departments = _departmentService.FindAll();
+            var departments = await _departmentService.FindAllAsync();
             var viewModel = new SellerFormViewModel { Departments = departments, Seller = seller };
 
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(viewModel);
             }
@@ -138,7 +139,7 @@ namespace WebSalesMVC.Controllers
 
             try
             {
-                _sellerService.Update(seller);
+                await _sellerService.UpdateAsync(seller);
                 return RedirectToAction("Index");
 
             }
