@@ -43,9 +43,16 @@ namespace WebSalesMVC.Services
 
         public async Task RemoveAsync(int id)
         {
+            try { 
             var obj = await _context.Seller.FindAsync(id);
             _context.Remove(obj);
             await _context.SaveChangesAsync();
+            }
+
+            catch (DbUpdateException e)
+            {
+                throw new IntegrityException("erro vendedor possui vendas");
+            }
         }
 
         public async Task UpdateAsync(Seller obj)

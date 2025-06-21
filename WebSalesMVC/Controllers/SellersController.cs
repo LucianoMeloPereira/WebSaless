@@ -72,6 +72,7 @@ namespace WebSalesMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(Seller seller)
         {
+            try { 
             if (seller == null)
             {
                 return NotFound();
@@ -80,6 +81,12 @@ namespace WebSalesMVC.Controllers
 
             await _sellerService.RemoveAsync(seller.Id);
             return RedirectToAction("Index");
+            }
+
+            catch(IntegrityException e)
+            {
+                return RedirectToAction(nameof(Error));
+            }
 
         }
 
